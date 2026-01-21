@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beatee Agro-Processing</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Times New Roman', serif;
+      background-color:#f2f7f3; /* light page background */
+      text-align: center;
+      padding-top: 25px;
+    }
+
+    #BEA{
+      font-family: 'Times New Roman', Times, serif;
+      font-synthesis-weight: bold;
+      font-weight: bold;
+      
+    }
+
+    .fancy-heading {
+      display: block;
+      text-align: center;
+      color: #2e8b57; /* green text */
+      background: linear-gradient(to top, #01b735, #ffffff); /* soft gradient background */
+      border-radius: 10px;
+      padding: 30px 50px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-in-out;
+
+    .fancy-heading h1 {
+      font-size: 35px;
+      font-weight: bold;
+      margin: 10px 0;
+      letter-spacing: 2px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .line {
+      height: 2px;
+      background-color: #2e8b57;
+      width: 40%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .star {
+      font-size: 18px;
+      color: #2e8b57;
+      margin-top: 5px;
+    }
+
+    .logo{
+      width: 300px;
+      hight: auto;
+      margin-bottom: 5px;
+    }
+  
+    .margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f7f5;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .columns {
+      display: ruby-text;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      flex-wrap: wrap; /* makes it responsive on small screens */
+    }
+
+    .column {
+      background-color: #fff;
+      border: 2px solid #2e8b57;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .column:hover {
+      transform: translateY(-20px);
+    }
+
+    .column img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .column h3 {
+      color: #2e8b57;
+      margin-bottom: 10px;
+    }
+
+    .column p {
+      color: #333;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    
+    .center-image {
+      display: inline;
+      width: 10px;
+      height: anto;
+      margin: 0;
+      background-attachment: fixed;
+      flex-wrap: wrap;
+      border-style: ridge;
+      border-width: 6px;
+      border-color: green;
+    }
+
+    .line2 {
+      border-style: inset;
+      border-width: 6px;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+      height: 2px;
+      background-color: #2e8b57;
+      width: 40%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .parent {
+     display: grid;
+     grid-template-columns: repeat(1, 1fr);
+     grid-template-rows: repeat(2, 1fr);
+     gap: 11px;
+    }
+    
+   .kelly1 {
+      grid-row: span 2 / span 2;
+      border-style: ridge;
+      border-width: 4px;
+      border-color: grey;
+    
+
+    }
+
+   .kelly2 {
+    grid-row-start: 3;
+   
+    }
+
+    ul {
+      list-style-type: disc;  /* bullet style: disc, circle, or square */
+      margin-left: 40px;      /* space from the left side */
+      font-size: 18px;        /* text size */
+      color: black; 
+      text-align: justify; 
+    }
+
+    button {
+      background-color: red; /* Button color (green) */
+      color: white;              /* Text color */
+      padding: 12px 24px;        /* Space inside button */
+      border: none;              /* Remove border */
+      border-radius: 8px;        /* Rounded corners */
+      cursor: pointer;           /* Hand cursor on hover */
+      font-size: 16px;           /* Text size */
+      font-family: georgia;
+      margin: 0;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+       background-color: #3e8e41;
+    }
+    button:active {
+       background-color: #2e7031;
+    }
+
+
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+       font-family: Arial, Helvetica, sans-serif;
+    }
+
+        /* Style the header */
+    header {
+      background-color: #666;
+      padding: 30px;
+      text-align: center;
+      font-size: 35px;
+      color: rgb(219, 223, 33);
+    }
+
+       /* Create two columns/boxes that floats next to each other */
+    nav {
+      float: left;
+      width: 20%;
+      height: 400px; /* only for demonstration, should be removed */
+      background: #ccc;
+      padding: 20px;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+       /* Style the list inside the menu */
+    nav ul {
+       list-style-type: none;
+       padding: 0;
+       font-family: 'Times New Roman', Times, serif;
+    }
+
+    article {
+      float: left;
+      padding: 0px;
+      width: 70%;
+      background-color: #f1f1f1;
+      height: 400px; /* only for demonstration, should be removed */
+    }
+
+    /* Clear floats after the columns */
+    section::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+     /* Style the footer */
+    footer {
+     background-color: #777;
+     padding: 10px;
+     text-align: center;
+    color: white;
+    }
+
+      /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+    @media (max-width: 600px) {
+    nav, article {
+      width: 100%;
+      height: auto;
+      }
+    }
+    .quality-box {
+       border-left: 4px solid #ccc; /* the vertical line */
+       padding-left: 15px;          /* space between text and line */
+       margin: 20px 0 20px +50px;              /* space around the box */
+       background-color: transparent;
+    }
+    #margin{
+      margin: 20px 0 20px +40px; 
+      text-align: justify;
+      font-family: "'Times New Roman', Times, serif";
+    }
+    .product-container{
+      display:flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .main-product,
+    .sub-product{
+      width: 250%;
+    }
+    ul.{
+      list-style: disc;
+      margin-left: 20px;
+    }
+    .image-container1 {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+   .image-member1{
+      background: white;
+      border-radius: 15px;
+      padding: 15px;
+      width: 530px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .small-image{
+      width: 500px;
+      height: 450px;
+    }
+    .image-member2 {
+      background: white;
+      border-radius: 15px;
+      padding: 15px;
+      width: 1030px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #name-tag{
+      font-family: 'Times New Roman', Times, serif;
+      font-size: x-large;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="fancy-heading">
+    <div class="line"></div>
+    <div class="star">★</div>
+    <h1 id="BEA">BEATEE AGRO-PROCESSING</h1>
+    <div class="line"></div>
+    <br>
+     <img src="logo2.png" alt="company logo" class="logo">
+  </div>
+   <br>
+    <div class="nav-right" aria-hidden="true">
+        <div class="nav-item"></div>
+        <div class="nav-item"></div>
+        <div class="nav-item"></div>
+    </div>
+
+  <h2 style="color:green ;">Welcome to BEATEE AGRO-PROCESSING, the home of premium, hygienically processed  Gari that brings <br> the true taste of Ghana to your table. We take pride in transforming fresh, locally sourced cassava into <br> high-quality Gari that nourishes families and supports our local farmers.</h2>
+  <div class="line2"></div>
+  <br>
+
+  <div class="parent">
+    <div class="kelly1"><p style="font-family: Times New Roman;">At BEA-TEE AGRO PROCESSING, we believe that great food should not only taste good but also make people happy that’s why we’re known as the “Bringer of Joy.” <br>Every grain of our Gari is carefully processed under strict hygiene and quality standards to ensure freshness, flavor, and nutrition.<br>
+      From farm to factory, our dedicated team works with passion and care to produce Gari that meets the needs of both local and international markets. <br> Whether you enjoy it with sugar and milk, soakings, or as part of your favorite meal, our Gari delivers consistent quality and delicious taste every time.
+      <hr style="width: 80%; margin: 20px auto; ">
+      <h3 style="font-family: 'Times New Roman', Times, serif;">What Makes Our Gari Special</h3>
+      <ul style="font-family: 'Times New Roman', Times, serif;">
+            <li>100% natural cassava, no preservatives.</li>
+            <li>Hygienically processed and packaged.</li>
+            <li>Smooth texture and rich flavor.</li>
+           <li>Available in both White and Yellow Gari.</li>
+           <li>Trusted by homes, retailers, and wholesalers.</li>
+        </ul>
+     <a href="about.html"> <button onclick="about.html='default.asp'">About US</button> </a>
+     <a href="gallery.html"> <button onclick="about.html='default.asp'">Gallery</button> </a>
+    </p>
+  </div>
+
+  <br>
+
+    <div class="kelly2"><p1>
+    <h2 style="font-family: 'Times New Roman', Times, serif;">Our Product</h2>
+     <h3 style="font-family: 'Times New Roman', Times, serif;">Introduction</h3>
+     At BEATEE AGRO-PROCESSING, every grain of Gari tells a story a story of dedication, purity, and the pride of Ghanaian craftsmanship.<br> 
+     We specialize in producing top-quality White Gari and Yellow Gari, made from the finest locally sourced cassava.<br>
+     Our Gari is not just food; it’s an experience the true taste of Ghana that connects families, communities, and traditions.<br>
+     From peeling to roasting, each step of our production process follows strict hygiene and safety standards.<br> 
+     The result is clean, crispy, and flavorful Gari that lasts long, tastes fresh, and cooks or soaks perfectly every time.<br>
+     Our customers trust us because we deliver consistency, quality, and joy just as our slogan says: “Bringer of Joy.”
+    </p1></div>
+   </div>
+  
+  <div class="columns">
+    <div class="column">
+      <img src="image1.jpg" alt="Service 1">
+      <h3>Service One</h3>
+      <p>This is where you write something short about this service or picture.</p>
+    </div>
+
+    <div class="column">
+      <img src="image2.jpg" alt="Service 2">
+      <h3>Service Two</h3>
+      <p>Write a few lines about what this picture represents or describes.</p>
+    </div>
+
+    <div class="column">
+      <img src="image3.jpg" alt="Service 3">
+      <h3>Service Three</h3>
+      <p>Explain something interesting or important about this section.</p>
+      
+    </div> 
+    
+  </div>
+   <br>
+   <div class="center-image">
+    <img src="Girls.jpg" alt="four girls" claa="center-image">
+   </div>
+    
+  </div>
+  <h2 id="margin">Our Product Range</h2>
+  <div class="quality-box">
+  <p style="text-align: justify;"><b>🌾 1. White Gari </b><br>
+    Pure and natural our White Gari is made from carefully selected cassava tubers with no additives or preservatives.
+    It’s loved for its smooth texture, clean aroma, and authentic taste that reminds you of home.</p>
+
+   <ul style="font-family: 'Times New Roman', Times, serif;">
+        <h4 style="font-family: 'Times New Roman', Times, serif;">Perfect for:</h4>
+            <li>Soakings with sugar, milk, and groundnuts.</li>
+            <li>Eba and other traditional dishes.</li>
+            <li>Retail packaging or bulk supply for traders.</li>
+            <h4 style="font-family: 'Times New Roman', Times, serif;">Key Features:</h4>
+           <li>100% natural, sun-dried and roasted.</li>
+           <li>Long shelf life.</li>
+           <li>Hygienically packed and sealed.</li>
+           <li>Available in fine, medium, and coarse textures.</li>
+        </ul>
+    </div>
+        <hr style="width: 80%; margin: 20px auto; ">
+        <div class="quality-box">
+        <p style="text-align: justify;">
+          <b>🟡 2. Yellow Gari</b><br>
+           Enriched with pure red palm oil, our Yellow Gari brings extra flavor, color, and nutrition to your meals.
+           It’s crunchy, golden, and a favorite for both home cooking and outdoor meals.<br>
+    
+          <ul style="font-family: 'Times New Roman', Times, serif;">
+            <h4 style="font-family: 'Times New Roman', Times, serif;">Perfect for:</h4>
+            <li>Making “Gari foto” or “Gari jollof.”</li>
+            <li>Street food vendors and family meals”</li>
+            <li>Export and bulk supply for distributors.</li>
+            <h4 style="font-family: 'Times New Roman', Times, serif;">Key Features:</h4>
+            <li>Naturally colored with palm oil.</li>
+            <li>Rich in Vitamin A and healthy fats.</li>
+            <li>Distinct golden color and appetizing taste.</li>
+            <li>Carefully roasted for uniform texture and flavor.</li>
+          </ul>
+        </p>
+      </p>
+    </div>
+  <hr style="width: 80%; margin: 20px auto; ">  
+     <div class="quality-box">
+        <p style="text-align: justify;">
+          <b>🧺 3. Fortified and Custom Gari (Optional)</b><br>
+
+                We also offer Fortified Gari enriched with essential vitamins and minerals — ideal for schools, hospitals, and organizations promoting nutrition.
+                For wholesalers and export partners, we provide custom packaging, labeling, and branding to suit your business needs.
+                <ul style="font-family: 'Times New Roman', Times, serif;">
+                  <h4 style="font-family: 'Times New Roman', Times, serif;">Available Packaging Sizes:</h4>
+                   <li>Making “Gari foto” or “Gari jollof.”</li>
+                   <li>Street food vendors and family meals”</li>
+                   <li>Export and bulk supply for distributors.</li>
+                </ul>
+        </p>    
+     </div>
+  <hr style="width: 80%; margin: 20px auto; "> 
+  <h3 id="margin">Our Quality Commitment</h3>
+   <div class="quality-box">
+  <p>
+    At BEA TEE AGRO PROCESSING, quality is not just a goal it’s our identity. We maintain strict hygiene from farm to factory. Our equipment is regularly sanitized, and our workers are trained to follow safe and responsible food-handling practices.
+    Every batch of Gari passes through careful sieving, roasting, and drying to achieve the perfect texture and flavor. Our packaging is airtight, ensuring that the freshness of your Gari remains intact for months.
+  </p>
+  <p>
+    Every batch of Gari passes through careful sieving, roasting, and drying to preserve its rich flavor.
+    Our packaging is airtight, ensuring that the freshness of your Gari lasts longer.
+  </p>
+  </div>
+  <hr style="width: 80%; margin: 20px auto; "> 
+  <h3 id="margin">Why Choose BEA TEE Gari?</h3>
+   <div class="quality-box">
+     <ul style="font-family: 'Times New Roman', Times, serif;">
+       <li>Made from 100% locally sourced cassava.</li>
+       <li>Zero chemicals or artificial preservatives.</li>
+       <li>Hygienically processed with modern equipment.</li>
+       <li>Affordable pricing with reliable supply for all customers.</li>
+       <li>Trusted by households, shops, and wholesalers across Ghana.</li>
+     </ul>
+  </div>
+  <hr style="width: 80%; margin: 20px auto; "> 
+  <h3 id="margin">Message from the Founder</h3>
+   <div class="quality-box">
+    “At BEA TEE AGRO PROCESSING, we believe that every meal should bring happiness. That’s why we pour our passion and effort into every pack of Gari we produce. From the farmer who plants the cassava to the customer who opens the bag, we make sure everyone feels the joy in what we do.”<br>
+     Founder: <i>JULIANA AFI YAMENU</i></p>
+
+   </div>
+ <header>
+   <h2>Types of Gari</h2>
+ </header>
+
+ <section>
+  <nav>
+    <ul>
+      <li><a href="#">London</a></li>
+      <li><a href="#">Paris</a></li>
+      <li><a href="#">Tokyo</a></li>
+    </ul>
+  </nav>
+  
+  <article>
+    <h1>List of Product</h1>
+    <div class="product-container">
+      <div class="main-product"> 
+       <ul style="font-family: 'Times New Roman', Times, serif;">
+        <h3>Main-Product</h3>
+        <li>Fortified Raw Gari</li>
+        <li>Fortified Coconut Gari</li>
+        <li>Fortified Margarine Gari</li>
+        <li>Fortified Soya Beans Gari</li>
+        <li>Starch Gari (Tapioca)</li>
+       </ul>
+      </div>
+      <div class="sub-product">     
+        <ul style="font-family: 'Times New Roman', Times, serif;">
+          <h3>Sub-Product</h3>
+         <li>Raw Gari Mix</li>
+         <li>Coconut Gari Mix</li>
+         <li>Margarine Gari Mix</li>
+         <li>Soya Beans Gari Mix</li>
+        </ul>
+      </div> 
+    </div>  
+  </article>
+ </section>
+
+   <footer>
+   <a href="Production Process.html"> <button onclick="about.html='default.asp'">Production Process</button> </a>
+   </footer><br>
+      <div class="image-container1">
+        <div class="image-member1">
+          <img src="raw.jpg" alt="Gari" class="small-image">
+          <h3 id="name-tag">Raw Gari</h3> 
+        </div>  
+        <div class="image-member1">
+          <img src="margarine.jpg" class="small-image" alt="Gari">
+          <h3 id="name-tag">Margarine Gari</h3> 
+        </div>  
+        <div class="image-member2">
+          <img src="Packaging.jpg" style="width: 1000px; height: 500px;" class="small-image"alt="Gari">
+          <h3 id="name-tag">All Product</h3>  
+        </div>
+        <div class="image-member1">
+          <img src="soya.jpg" alt="Gari" class="small-image">
+          <h3 id="name-tag">Soya Beans Gari</h3> 
+        </div>  
+        <div class="image-member1">
+          <img src="tapioca.jpg" class="small-image" alt="Gari">
+          <h3 id="name-tag">Tapioca Gari</h3> 
+        </div> 
+      </div> 
+      <hr style="width: 80%; margin: 20px auto;">
+      <div class="image-container1">
+        <div class="image-member1">
+          <img src="pic1.png" alt="Gari" class="small-image">
+          <h3 id="name-tag">Raw Gari</h3> 
+        </div>  
+        <div class="image-member1">
+          <img src="pic2.png" alt="Gari" class="small-image">
+          <h3 id="name-tag">Coconut Gari</h3> 
+        </div> 
+        <div class="image-member2">
+          <img src="coconut.jpg" style="width: 1000px; height: 500px;" class="small-image"alt="Gari">
+          <h3 id="name-tag">Coconut Gari</h3> 
+        </div> 
+        <div class="image-member1">
+          <img src="pic3.jpg" class="small-image" alt="Gari">
+          <h3 id="name-tag">Margarine Gari</h3>  
+        </div>
+        <div class="image-member1">
+          <img src="pic4.jpg" alt="Gari image" class="small-image">
+          <h3 id="name-tag">Soya Beans Gari</h3> 
+        </div>
+      </div>  
+
+  </body>
+</html>

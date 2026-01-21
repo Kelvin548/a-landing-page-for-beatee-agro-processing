@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Image Gallery</title>
+    <style>
+        /* CSS Reset and Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a; /* Dark background */
+            /* Key for 3D depth */
+            perspective: 1200px;
+            overflow: hidden;
+        }
+
+        /* Gallery Container */
+        .gallery {
+            position: relative;
+            width: 150px; /* Width of the single image/face */
+            height: 150px; /* Height of the single image/face */
+            transform-style: preserve-3d;
+            animation: rotate 25s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: perspective(1200px) rotateY(0deg);
+            }
+            100% {
+                transform: perspective(1200px) rotateY(360deg);
+            }
+        }
+        
+        /* Image Element Styling */
+        .gallery span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotateY(calc(var(--i) * 45deg)) translateZ(400px); /* Optional: Reflection effect seen in the video */
+            -webkit-box-reflect: below 1px linear-gradient(transparent, #0004);
+        }
+
+        .gallery span img {
+            width: 140%;
+            height: 100%;
+            object-fit: cover; /* Ensures images fill the span without distortion */
+            border-radius: 5px;
+            border: 2px solid white;
+        }
+        
+        /* Hover to stop rotation (optional) */
+        .gallery:hover {
+            animation-play-state: paused;
+        }
+
+        .gallery span .caption {
+            position: absolute;
+            bottom: -20px; /* Adjust this value to control the space below the image */
+            left: 0;
+            width: 100%;
+            color: #ccc;
+            font-family: "font-family: 'Times New Roman', Times, serif;";
+            font-size: 14px;
+            text-align: center;    /* Ensures the text stays in the 3D plane of the image */
+            transform-style: preserve-3d;   /* Ensures the text is readable and aligned with the rotated image */
+            transform: translateZ(0); 
+            padding-top: 5px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="gallery">
+        <span style="--i:1;"><img src="raw.jpg" alt="Raw Gari"><p class="caption">Raw Gari</p></span>
+        <span style="--i:2;"><img src="margarine.jpg" alt="Margarine Gari"><p class="caption">Margarine Gari</p></span>
+        <span style="--i:3;"><img src="soya.jpg" alt="Soya Bean Gari"><p class="caption">Soya Beans Gari</p> </span>
+        <span style="--i:4;"><img src="Coconut.jpg" alt="coconut gari"><p class="caption">Coconut Gari</p></span>
+        <span style="--i:5;"><img src="logo.jpg" alt="log0"><p class="caption">Logo</p></span>
+        <span style="--i:6;"><img src="Packaging.jpg" alt="Image 6"><p class="caption">All Product</p></span>
+        <span style="--i:7;"><img src="Girls.jpg" alt=" Four Girls"><p class="caption">Bringer of Joy</p></span>
+        <span style="--i:8;"><img src="tapioca.jpg" alt="Tapioca"><p class="caption">Tapioca</p></span>
+    </div>
+
+</body>
+</html>
