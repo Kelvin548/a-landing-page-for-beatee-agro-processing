@@ -6,6 +6,38 @@
   <title>Beatee Agro-Processing</title>
 
   <style>
+    @media (max-width:900){
+      .container {
+        grid-template-areas: 
+           "header"
+           "hero"
+           "sidebar"
+           "main"
+           "footer";
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (min-width:481px) and (max-width: 768px){
+      .nave-links {
+        display: block;
+      }
+      .hamburger {
+        display: block;
+      }
+    }
+    @media (481px <= width >= 760px){
+      .nave-links {
+        display: block;
+      }
+    }
+    @media (max-width: 480px){
+      .nav-links {
+        display: none;
+      }
+      .hambuger {
+        display: block;
+      }
+    }
     body {
       margin: 0;
       font-family: 'Times New Roman', serif;
