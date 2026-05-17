@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Production Process | Beatee Agro-Processing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========== CSS VARIABLES ========== */
+    :root {
+      --purple-dark:   #3b1f6e;
+      --purple-mid:    #6a35b8;
+      --purple-light:  #9b6ddb;
+      --purple-pale:   #f3eeff;
+      --gold:          #c9a84c;
+      --gold-light:    #f0d080;
+      --cream:         #faf8ff;
+      --white:         #ffffff;
+      --text-dark:     #1e1530;
+      --text-mid:      #4a3870;
+      --text-light:    #7a6a9a;
+      --border:        rgba(106,53,184,0.15);
+      --shadow-sm:     0 2px 12px rgba(59,31,110,0.09);
+      --shadow-md:     0 6px 32px rgba(59,31,110,0.13);
+      --shadow-lg:     0 16px 56px rgba(59,31,110,0.17);
+      --radius:        14px;
+      --radius-lg:     24px;
+      --transition:    0.35s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ========== RESET ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 72px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(59,31,110,0.10);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--purple-dark); line-height: 1.15;
+    }
+    .nav-logo-text span {
+      display: block; font-size: 0.64rem; font-family: 'Lato', sans-serif;
+      font-weight: 400; color: var(--text-light); letter-spacing: 1.5px; text-transform: uppercase;
+    }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--text-mid);
+      position: relative; padding-bottom: 4px; transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--purple-mid); transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--purple-dark); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--purple-mid); }
+    .nav-links a.active::after { width: 100%; }
+    .nav-cta {
+      background: var(--purple-mid) !important; color: var(--white) !important;
+      padding: 10px 22px !important; border-radius: 50px !important;
+    }
+    .nav-cta:hover { background: var(--purple-dark) !important; }
+    .nav-cta::after { display: none !important; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 6px;
+    }
+    .hamburger span {
+      display: block; width: 26px; height: 2.5px;
+      background: var(--purple-dark); border-radius: 4px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+      background: var(--white); z-index: 999;
+      flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Playfair Display', serif; font-size: 1.6rem;
+      color: var(--purple-dark); font-weight: 700;
+    }
+    .mobile-nav a:hover { color: var(--purple-mid); }
+
+    /* ========== PAGE HERO ========== */
+    .page-hero {
+      padding-top: 72px;
+      background: linear-gradient(135deg, var(--purple-dark) 0%, #21074d 60%, #3b1f6e 100%);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 20% 80%, rgba(201,168,76,0.13) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(155,109,219,0.18) 0%, transparent 50%);
+    }
+    .page-hero-inner {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto;
+      padding: 72px 5% 80px;
+      display: flex; align-items: center; gap: 48px;
+    }
+    .page-hero-text { flex: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.18); border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light); border-radius: 50px;
+      padding: 7px 18px; font-size: 0.75rem; letter-spacing: 2px;
+      text-transform: uppercase; font-weight: 700; margin-bottom: 22px;
+    }
+    .page-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem); color: var(--white); font-weight: 900;
+      margin-bottom: 18px; line-height: 1.15;
+    }
+    .page-hero h1 span { color: var(--gold-light); }
+    .page-hero p {
+      font-size: 1.05rem; color: rgba(255,255,255,0.78);
+      line-height: 1.8; max-width: 580px;
+    }
+    .hero-divider {
+      width: 70px; height: 3px; margin: 22px 0;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      border-radius: 2px;
+    }
+    .page-hero-steps {
+      display: flex; flex-direction: column; gap: 12px; margin-top: 32px;
+    }
+    .hero-step-pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 50px; padding: 9px 18px;
+      color: rgba(255,255,255,0.85); font-size: 0.85rem; width: fit-content;
+    }
+    .hero-step-pill .num {
+      background: var(--gold); color: var(--purple-dark);
+      border-radius: 50%; width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700; flex-shrink: 0;
+    }
+    .hero-step-count {
+      flex-shrink: 0; background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3); border-radius: var(--radius);
+      padding: 36px 44px; text-align: center;
+    }
+    .hero-step-count .big { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold-light); font-weight: 900; line-height: 1; }
+    .hero-step-count .label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-top: 8px; }
+
+    /* ========== TIMELINE SECTION ========== */
+    .timeline-section {
+      padding: 100px 5%;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .section-label {
+      display: inline-block; font-size: 0.73rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase; color: var(--purple-mid); margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(1.7rem, 3.5vw, 2.5rem); color: var(--purple-dark); margin-bottom: 16px;
+    }
+    .section-title span { color: var(--purple-mid); }
+    .section-line {
+      width: 60px; height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      border-radius: 2px; margin-bottom: 56px;
+    }
+
+    /* ===== STEP CARD ===== */
+    .step-card {
+      display: grid; grid-template-columns: 80px 1fr; gap: 0 36px;
+      margin-bottom: 72px; position: relative;
+    }
+    .step-card:last-child { margin-bottom: 0; }
+
+    /* vertical connector line */
+    .step-card:not(:last-child) .step-number-col::after {
+      content: '';
+      position: absolute; left: 40px; top: 80px;
+      width: 2px;
+      bottom: -72px;
+      background: linear-gradient(to bottom, var(--purple-light), rgba(106,53,184,0.1));
+      transform: translateX(-50%);
+    }
+
+    .step-number-col {
+      position: relative; display: flex; flex-direction: column; align-items: center;
+    }
+    .step-num-circle {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple-mid), var(--purple-dark));
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-md); flex-shrink: 0;
+      border: 3px solid var(--white);
+      outline: 3px solid var(--purple-light);
+    }
+    .step-num-circle .step-label { font-size: 0.48rem; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.65); line-height: 1; }
+    .step-num-circle .step-digit { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); font-weight: 700; line-height: 1.1; }
+    .step-icon-badge {
+      margin-top: 10px; font-size: 1.4rem;
+      background: var(--purple-pale); border-radius: 50%;
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+    }
+
+    .step-body { padding-bottom: 12px; }
+    .step-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 14px; flex-wrap: wrap;
+    }
+    .step-header h2 {
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem); color: var(--purple-dark);
+    }
+    .step-tag {
+      font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+      color: var(--purple-mid); background: var(--purple-pale);
+      border-radius: 50px; padding: 4px 14px;
+    }
+    .step-body p {
+      font-size: 0.97rem; color: var(--text-mid); line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    /* Quality points */
+    .step-points { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .step-points li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.9rem; color: var(--text-mid); line-height: 1.6;
+    }
+    .step-points li::before {
+      content: '✓';
+      display: flex; align-items: center; justify-content: center;
+      min-width: 22px; height: 22px;
+      background: rgba(106,53,184,0.10); border-radius: 50%;
+      color: var(--purple-mid); font-size: 0.72rem; font-weight: 700; margin-top: 1px;
+    }
+
+    /* ===== IMAGE GRID inside step ===== */
+    .step-images {
+      display: grid; gap: 16px;
+      margin-top: 20px;
+    }
+    .step-images.cols-1 { grid-template-columns: 1fr; max-width: 640px; }
+    .step-images.cols-2 { grid-template-columns: 1fr 1fr; }
+    .step-images.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .step-img-card {
+      border-radius: var(--radius); overflow: hidden;
+      background: var(--white); box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .step-img-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+    .step-img-card img {
+      width: 100%; height: 240px; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .step-images.cols-1 .step-img-card img { height: 340px; }
+    .step-img-card:hover img { transform: scale(1.04); }
+    .step-img-label {
+      padding: 12px 16px;
+      font-size: 0.82rem; font-weight: 700; color: var(--purple-dark);
+      letter-spacing: 0.5px;
+    }
+
+    /* Wide image (spans full width inside cols-2 or cols-3) */
+    .step-img-card.wide { grid-column: 1 / -1; }
+    .step-img-card.wide img { height: 320px; }
+
+    /* ===== DIVIDER ===== */
+    .step-divider {
+      width: 80%; max-width: 900px; margin: 0 auto 72px;
+      height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+
+    /* ===== FINAL MESSAGE ===== */
+    .final-section {
+      background: linear-gradient(135deg, var(--purple-dark), #21074d);
+      padding: 90px 5%; position: relative; overflow: hidden;
+    }
+    .final-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 60%, rgba(201,168,76,0.12), transparent 55%);
+    }
+    .final-inner {
+      max-width: 860px; margin: 0 auto;
+      text-align: center; position: relative; z-index: 1;
+    }
+    .final-icon { font-size: 3rem; margin-bottom: 20px; }
+    .final-inner h2 {
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem); color: var(--white); margin-bottom: 20px;
+    }
+    .final-inner h2 span { color: var(--gold-light); }
+    .final-divider {
+      width: 70px; height: 3px; margin: 0 auto 28px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light)); border-radius: 2px;
+    }
+    .final-inner p {
+      font-size: 1.05rem; color: rgba(255,255,255,0.78);
+      line-height: 1.85; margin-bottom: 40px;
+    }
+    .final-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 34px; border-radius: 50px;
+      font-size: 0.88rem; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; cursor: pointer; border: none; transition: all var(--transition);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #b8913e);
+      color: var(--purple-dark);
+      box-shadow: 0 4px 24px rgba(201,168,76,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.45); }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      border: 2px solid rgba(255,255,255,0.4);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.10); transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #0e0520; color: rgba(255,255,255,0.65);
+      padding: 56px 5% 28px;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 28px;
+      padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand-sm img { width: 44px; height: 44px; border-radius: 50%; margin-bottom: 8px; }
+    .footer-brand-sm h4 {
+      font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white);
+    }
+    .footer-brand-sm p { font-size: 0.8rem; color: rgba(255,255,255,0.5); font-style: italic; margin-top: 4px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.83rem; color: rgba(255,255,255,0.55); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-bottom {
+      max-width: 1200px; margin: 22px auto 0;
+      font-size: 0.78rem; color: rgba(255,255,255,0.3);
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    }
+
+    /* ===== FADE-IN ANIMATION ===== */
+    .fade-in { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-bar {
+      position: fixed; top: 72px; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(to right, var(--purple-mid), var(--gold));
+      z-index: 999; transition: width 0.1s linear;
+    }
+
+    /* ========== RESPONSIVE ========== */
+
+    /* Large Desktop 1440px+ */
+    @media (min-width: 1440px) {
+      .timeline-section { max-width: 1360px; }
+    }
+
+    /* Tablet Landscape 900px – 1024px */
+    @media (max-width: 1024px) {
+      .page-hero-inner { flex-direction: column; gap: 36px; }
+      .hero-step-count { align-self: flex-start; }
+      .step-images.cols-3 { grid-template-columns: 1fr 1fr; }
+      .step-img-card.wide { grid-column: span 2; }
+    }
+
+    /* Tablet Portrait 600px – 899px */
+    @media (max-width: 899px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .timeline-section { padding: 72px 5%; }
+      .step-card { grid-template-columns: 60px 1fr; gap: 0 24px; }
+      .step-num-circle { width: 60px; height: 60px; }
+      .step-num-circle .step-digit { font-size: 1.2rem; }
+      .step-card:not(:last-child) .step-number-col::after { left: 30px; }
+      .step-images.cols-2, .step-images.cols-3 { grid-template-columns: 1fr 1fr; }
+      .step-img-card.wide { grid-column: 1 / -1; }
+      .step-img-card img { height: 200px; }
+      .step-images.cols-1 .step-img-card img { height: 280px; }
+      .step-img-card.wide img { height: 240px; }
+    }
+
+    /* Mobile Large 480px – 599px */
+    @media (max-width: 599px) {
+      .page-hero-inner { padding: 56px 4% 64px; }
+      .page-hero h1 { font-size: 2rem; }
+      .step-card { grid-template-columns: 1fr; }
+      .step-number-col { flex-direction: row; align-items: center; gap: 14px; margin-bottom: 16px; }
+      .step-icon-badge { margin-top: 0; }
+      .step-card:not(:last-child) .step-number-col::after { display: none; }
+      .step-images.cols-2, .step-images.cols-3 { grid-template-columns: 1fr; }
+      .step-img-card.wide { grid-column: span 1; }
+      .step-img-card img { height: 220px; }
+      .step-images.cols-1 .step-img-card img { height: 240px; }
+      .final-btns { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 280px; justify-content: center; }
+      .navbar { padding: 0 4%; height: 64px; }
+      .mobile-nav { top: 64px; }
+      .progress-bar { top: 64px; }
+      .footer-inner { flex-direction: column; }
+      .footer-bottom { flex-direction: column; }
+    }
+
+    /* Mobile Small 320px – 479px */
+    @media (max-width: 479px) {
+      .page-hero h1 { font-size: 1.7rem; }
+      .section-title { font-size: 1.5rem; }
+      .timeline-section { padding: 56px 4%; }
+      .step-header h2 { font-size: 1.15rem; }
+      .hero-step-count { width: 100%; text-align: center; }
+      .footer-links { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== PROGRESS BAR ===== -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img src="logo2.png" alt="Beatee Logo">
+      <div class="nav-logo-text">
+        Beatee Agro-Processing
+        <span>Bringer of Joy</span>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="Production Process.html" class="active">Process</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html" onclick="closeMobileNav()">Home</a>
+    <a href="about.html" onclick="closeMobileNav()">About Us</a>
+    <a href="gallery.html" onclick="closeMobileNav()">Gallery</a>
+    <a href="Production Process.html" onclick="closeMobileNav()">Our Process</a>
+    <a href="contact.html" onclick="closeMobileNav()">Contact Us</a>
+  </div>
+
+  <!-- ===== PAGE HERO ===== -->
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-text fade-in">
+        <div class="hero-badge">Farm to Table · Step by Step</div>
+        <h1>Our Production<br><span>Process</span></h1>
+        <div class="hero-divider"></div>
+        <p>At BEATEE AGRO-PROCESSING, every grain of Gari is produced with care, precision, and passion. We combine traditional Ghanaian processing methods with modern hygiene standards — authentic taste, guaranteed safety.</p>
+        <div class="page-hero-steps">
+          <div class="hero-step-pill"><span class="num">1</span> Harvesting the Cassava</div>
+          <div class="hero-step-pill"><span class="num">2</span> Peeling &amp; Washing</div>
+          <div class="hero-step-pill"><span class="num">3</span> Grating → Fermentation → Pressing</div>
+          <div class="hero-step-pill"><span class="num">4</span> Sieving → Roasting → Packaging</div>
+        </div>
+      </div>
+      <div class="hero-step-count fade-in">
+        <div class="big">10</div>
+        <div class="label">Quality<br>Process Steps</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TIMELINE ===== -->
+  <section class="timeline-section">
+    <span class="section-label">How We Make It</span>
+    <h2 class="section-title">From Cassava Farm to <span>Your Table</span></h2>
+    <div class="section-line"></div>
+
+    <!-- STEP 1 -->
+    <div class="step-card fade-in" id="step1">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">01</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Harvesting the Cassava</h2>
+          <span class="step-tag">Raw Material</span>
+        </div>
+        <p>We begin by sourcing fresh, mature cassava roots from trusted local farmers. Our commitment to using only the best raw materials ensures that the cassava we process is free from rot, dirt, or chemical residue. We support local farmers through fair, long-term partnerships that empower communities and promote sustainable agriculture.</p>
+        <ul class="step-points">
+          <li>Only fully matured cassava tubers are selected</li>
+          <li>Sourced from trusted local Ghanaian farmers</li>
+          <li>Free from chemicals, rot, and impurities</li>
+          <li>Fair-trade partnerships that support rural communities</li>
+        </ul>
+        <div class="step-images cols-3">
+          <div class="step-img-card">
+            <img src="Harvesting1.jpg" alt="Harvesting">
+            <div class="step-img-label"> Harvesting</div>
+          </div>
+          <div class="step-img-card">
+            <img src="Harvesting2.jpg" alt="Cassava Roots">
+            <div class="step-img-label"> Fresh Cassava</div>
+          </div>
+            <div class="step-img-card">
+            <img src="load.jpg" alt="Cassava Roots">
+            <div class="step-img-label"> Fresh Cassava</div>
+          </div>
+          <div class="step-img-card wide">
+            <img src="Harvesting3.jpg" alt="Off Loading">
+            <div class="step-img-label">🚛 Off-Loading at Our Facility</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 2 -->
+    <div class="step-card fade-in" id="step2">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">02</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Peeling and Washing</h2>
+          <span class="step-tag">Hygiene</span>
+        </div>
+        <p>Once the cassava roots arrive at our facility, they are thoroughly peeled and washed using clean water and modern washing systems. This step removes all sand, soil, and impurities to guarantee a hygienic foundation for the rest of the process. Cleanliness at this stage sets the tone for a superior final product.</p>
+        <div class="step-images cols-2">
+          <div class="step-img-card">
+            <img src="Peeling1.jpg" alt="Peeling I">
+            <div class="step-img-label">🔪 Peeling — Stage I</div>
+          </div>
+          <div class="step-img-card">
+            <img src="Peeling2.jpg" alt="Peeling II">
+            <div class="step-img-label">🧹 Peeling — Stage II</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 3 -->
+    <div class="step-card fade-in" id="step3">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">03</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Grating</h2>
+          <span class="step-tag">Processing</span>
+        </div>
+        <p>The clean cassava is mechanically grated into a smooth, uniform pulp. Grating breaks down the cassava and prepares it for fermentation. Our machines are designed to achieve the perfect consistency while minimising waste and preserving the natural nutrients.</p>
+        <div class="step-images cols-2">
+          <div class="step-img-card">
+            <img src="grating.jpg" alt="Grating Machine">
+            <div class="step-img-label"> Grating Machine</div>
+          </div>
+          <div class="step-img-card">
+            <img src="grating2.jpg" alt="Grating Process">
+            <div class="step-img-label"> Grating in Progress</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 4 -->
+    <div class="step-card fade-in" id="step4">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">04</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Fermentation</h2>
+          <span class="step-tag">Flavour Development</span>
+        </div>
+        <p>The grated cassava is packed into fermentation sacks and left to ferment for 3–5 hours. This natural fermentation process enhances the flavor, aroma, and texture of the Gari, giving it that authentic Ghanaian taste everyone loves. We monitor the process closely to ensure proper timing and temperature for the best results.</p>
+        <ul class="step-points">
+          <li>Fermentation duration: 3–5 hours, carefully monitored</li>
+          <li>Develops the authentic Ghanaian Gari aroma and flavour</li>
+          <li>Temperature-controlled environment for consistency</li>
+        </ul>
+        <div class="step-images cols-1">
+          <div class="step-img-card">
+            <img src="Fermentation.jpg" alt="Fermentation">
+            <div class="step-img-label"> Fermentation Stage</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 5 -->
+    <div class="step-card fade-in" id="step5">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">05</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Pressing</h2>
+          <span class="step-tag">Moisture Removal</span>
+        </div>
+        <p>After fermentation, the cassava mash is pressed to remove excess water using hydraulic or manual pressing machines. This step reduces moisture content and ensures the Gari is dry enough for roasting. The pressing process is handled with care to maintain the right balance between dryness and softness.</p>
+        <div class="step-images cols-2">
+          <div class="step-img-card">
+            <img src="Pressing1.jpg" alt="Pressing">
+            <div class="step-img-label"> Pressing</div>
+          </div>
+          <div class="step-img-card">
+            <img src="Pressing2.jpg" alt="After Pressing">
+            <div class="step-img-label"> After Pressing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 6 -->
+    <div class="step-card fade-in" id="step6">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">06</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Sieving</h2>
+          <span class="step-tag">Grain Refinement</span>
+        </div>
+        <p>The pressed cassava cake is then sieved to remove lumps and fibrous materials. Sieving gives the Gari its fine and consistent grain, ensuring smoothness and easy, uniform roasting in the next stage.</p>
+        <div class="step-images cols-1">
+          <div class="step-img-card">
+            <img src="grating2.jpg" alt="Machine Sieving">
+            <div class="step-img-label"> Machine Sieving</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 7 -->
+    <div class="step-card fade-in" id="step7">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">07</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Roasting</h2>
+          <span class="step-tag">The Magic Step</span>
+        </div>
+        <p>This is where the magic happens. The sieved cassava is roasted in large, clean pans under steady heat until it turns into crispy, golden Gari. Our skilled roasters use traditional techniques, perfected through experience, to control temperature and timing — giving our Gari its unique aroma, rich taste, and satisfying crunch.</p>
+        <div class="step-images cols-1">
+          <div class="step-img-card">
+            <img src="Roasting1.jpg" alt="Roasting">
+            <div class="step-img-label"> Roasting — The Magic Step</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 8 -->
+    <div class="step-card fade-in" id="step8">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">08</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Cooling, Drying &amp; Second Sieving</h2>
+          <span class="step-tag">Texture Perfection</span>
+        </div>
+        <p>After roasting, the Gari is allowed to cool naturally in a clean, dry environment. This prevents moisture buildup and preserves the crisp texture — we never rush this process. The cooled Gari then goes through a <strong>second sieving</strong> to ensure superior smoothness and purity, separating finer particles for that perfect BEA TEE texture.</p>
+        <ul class="step-points">
+          <li>Uniform grain size for better quality and appearance</li>
+          <li>Improved texture — light, smooth, and easy to soak</li>
+          <li>Cleaner look and longer shelf life guaranteed</li>
+          <li>Consistency in every pack, from the first spoon to the last</li>
+        </ul>
+        <div class="step-images cols-1">
+          <div class="step-img-card">
+            <img src="Sieving.jpg" alt="Second Sieving">
+            <div class="step-img-label"> Cooling &amp; Second Sieving</div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 9 -->
+    <div class="step-card fade-in" id="step9">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">09</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Packaging</h2>
+          <span class="step-tag">Sealed Freshness</span>
+        </div>
+        <p>Once cooled, the Gari is carefully weighed, sealed, and packaged in food-grade bags that protect it from air and moisture. Our packaging is designed to preserve freshness, extend shelf life, and make the product attractive to customers. Available in multiple sizes to suit every need.</p>
+        <ul class="step-points">
+          <li>Available in 1kg, 5kg, 10kg, and 25kg sizes</li>
+          <li>Airtight, food-grade packaging materials</li>
+          <li>Suitable for homes, shops, and bulk distributors</li>
+          <li>Export-ready branding and custom labelling available</li>
+        </ul>
+        <div class="step-images cols-1">
+          <div class="step-img-card">
+            <img src="Packaging.jpg" alt="Packaging">
+            <div class="step-img-label"> Final Packaging — All Products</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 10 -->
+    <div class="step-card fade-in" id="step10">
+      <div class="step-number-col">
+        <div class="step-num-circle">
+          <span class="step-label">Step</span>
+          <span class="step-digit">10</span>
+        </div>
+        <div class="step-icon-badge"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-header">
+          <h2>Quality Inspection</h2>
+          <span class="step-tag">Final Approval</span>
+        </div>
+        <p>Before any product leaves our factory, it goes through a rigorous final quality inspection. We check for taste, texture, moisture content, and packaging integrity. Only Gari that meets our strict standards earns the BEA TEE AGRO PROCESSING label — your assurance of pure quality and joy.</p>
+        <ul class="step-points">
+          <li>Taste and aroma tested by experienced quality staff</li>
+          <li>Texture and moisture levels verified per batch</li>
+          <li>Packaging integrity checked before dispatch</li>
+          <li>Only approved batches carry the BEA TEE label</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== FINAL MESSAGE ===== -->
+  <section class="final-section">
+    <div class="final-inner fade-in">
+      <div class="final-icon">💛</div>
+      <h2>From the Farm to Your <span>Table with Joy</span></h2>
+      <div class="final-divider"></div>
+      <p>At BEA TEE AGRO PROCESSING, every step of our process reflects our belief that quality food begins with care. From the farmer's field to your dining table, we maintain the highest standards of hygiene, honesty, and dedication. That's why our Gari doesn't just feed — it brings joy to every home.</p>
+      <div class="final-btns">
+        <a href="index.html" class="btn btn-primary">Back to Home</a>
+        <a href="gallery.html" class="btn btn-outline">View Gallery</a>
+        <a href="about.html" class="btn btn-outline">About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand-sm">
+        <img src="logo2.png" alt="Beatee Logo">
+        <h4>Beatee Agro-Processing</h4>
+        <p>"Bringer of Joy" — Made in Ghana</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="Production Process.html">Process</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Beatee Agro-Processing. All rights reserved.</span>
+      <span>Made with ❤️ in Ghana</span>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      document.getElementById('progressBar').style.width = (scrolled / total * 100) + '%';
+    });
+
+    // Fade-in observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

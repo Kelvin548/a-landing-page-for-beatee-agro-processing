@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | Beatee Agro-Processing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple-dark:  #3b1f6e;
+      --purple-mid:   #6a35b8;
+      --purple-light: #9b6ddb;
+      --purple-pale:  #f3eeff;
+      --gold:         #c9a84c;
+      --gold-light:   #f0d080;
+      --cream:        #faf8ff;
+      --white:        #ffffff;
+      --text-dark:    #1e1530;
+      --text-mid:     #4a3870;
+      --text-light:   #7a6a9a;
+      --border:       rgba(106,53,184,0.15);
+      --shadow-sm:    0 2px 12px rgba(59,31,110,0.09);
+      --shadow-md:    0 6px 32px rgba(59,31,110,0.13);
+      --shadow-lg:    0 16px 56px rgba(59,31,110,0.17);
+      --radius:       14px;
+      --radius-lg:    24px;
+      --transition:   0.35s cubic-bezier(.4,0,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
+
+    /* ===== NAVBAR ===== */
+    .navbar { position:fixed; top:0; left:0; right:0; z-index:1000; display:flex; align-items:center; justify-content:space-between; padding:0 5%; height:72px; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); box-shadow:0 2px 20px rgba(59,31,110,0.10); }
+    .nav-logo { display:flex; align-items:center; gap:12px; }
+    .nav-logo img { width:44px; height:44px; border-radius:50%; object-fit:cover; }
+    .nav-logo-text { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--purple-dark); line-height:1.15; }
+    .nav-logo-text span { display:block; font-size:0.64rem; font-family:'Lato',sans-serif; font-weight:400; color:var(--text-light); letter-spacing:1.5px; text-transform:uppercase; }
+    .nav-links { display:flex; align-items:center; gap:32px; list-style:none; }
+    .nav-links a { font-size:0.85rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text-mid); position:relative; padding-bottom:4px; transition:color var(--transition); }
+    .nav-links a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--purple-mid); transition:width var(--transition); }
+    .nav-links a:hover { color:var(--purple-dark); }
+    .nav-links a:hover::after { width:100%; }
+    .nav-links a.active { color:var(--purple-mid); }
+    .nav-links a.active::after { width:100%; }
+    .nav-cta { background:var(--purple-mid)!important; color:var(--white)!important; padding:10px 22px!important; border-radius:50px!important; }
+    .nav-cta:hover { background:var(--purple-dark)!important; }
+    .nav-cta::after { display:none!important; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px; }
+    .hamburger span { display:block; width:26px; height:2.5px; background:var(--purple-dark); border-radius:4px; transition:transform var(--transition),opacity var(--transition); }
+    .hamburger.open span:nth-child(1) { transform:translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:translateY(-7.5px) rotate(-45deg); }
+    .mobile-nav { display:none; position:fixed; top:72px; left:0; right:0; bottom:0; background:var(--white); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:36px; }
+    .mobile-nav.open { display:flex; }
+    .mobile-nav a { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--purple-dark); font-weight:700; }
+    .mobile-nav a:hover { color:var(--purple-mid); }
+
+    /* ===== PAGE HERO ===== */
+    .page-hero {
+      padding-top: 72px;
+      background: linear-gradient(135deg, var(--purple-dark) 0%, #21074d 60%, #3b1f6e 100%);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(circle at 15% 85%, rgba(201,168,76,0.13) 0%, transparent 50%),
+                  radial-gradient(circle at 85% 15%, rgba(155,109,219,0.18) 0%, transparent 50%);
+    }
+    .page-hero-inner { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:72px 5% 80px; text-align:center; }
+    .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(201,168,76,0.18); border:1px solid rgba(201,168,76,0.4); color:var(--gold-light); border-radius:50px; padding:7px 20px; font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; font-weight:700; margin-bottom:24px; }
+    .page-hero h1 { font-size:clamp(2.2rem,5.5vw,4rem); color:var(--white); font-weight:900; margin-bottom:20px; }
+    .page-hero h1 span { color:var(--gold-light); }
+    .hero-divider { width:70px; height:3px; margin:0 auto 24px; background:linear-gradient(to right,var(--gold),var(--gold-light)); border-radius:2px; }
+    .page-hero p { font-size:1.07rem; color:rgba(255,255,255,0.78); line-height:1.8; max-width:580px; margin:0 auto; }
+
+    /* ===== 3D CAROUSEL SECTION ===== */
+    .carousel-section {
+      background: linear-gradient(135deg, #21074d 0%, var(--purple-dark) 100%);
+      padding: 80px 5%;
+      position: relative; overflow: hidden;
+    }
+    .carousel-section::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(circle at 50% 50%, rgba(155,109,219,0.15), transparent 65%);
+    }
+    .carousel-section-inner { max-width:1200px; margin:0 auto; position:relative; z-index:1; }
+    .cs-header { text-align:center; margin-bottom:64px; }
+    .section-label-light { display:inline-block; font-size:0.73rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold-light); margin-bottom:10px; }
+    .cs-header h2 { font-size:clamp(1.7rem,3.5vw,2.5rem); color:var(--white); margin-bottom:0; }
+    .cs-header h2 span { color:var(--gold-light); }
+    .cs-divider { width:60px; height:3px; margin:16px auto 0; background:linear-gradient(to right,var(--gold),var(--gold-light)); border-radius:2px; }
+
+    /* 3D Stage */
+    .carousel-stage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1400px;
+      height: 380px;
+      position: relative;
+    }
+    .gallery-3d {
+      position: relative;
+      width: 180px;
+      height: 240px;
+      transform-style: preserve-3d;
+      animation: spin3d 30s linear infinite;
+    }
+    .gallery-3d:hover { animation-play-state: paused; }
+    @keyframes spin3d {
+      from { transform: rotateY(0deg); }
+      to   { transform: rotateY(360deg); }
+    }
+    .g-face {
+      position: absolute; top: 0; left: 0;
+      width: 180px; height: 240px;
+      transform: rotateY(calc(var(--i) * 45deg)) translateZ(420px);
+      border-radius: 12px;
+      overflow: visible;
+    }
+    .g-face img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid rgba(240,208,128,0.6);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      -webkit-box-reflect: below 6px linear-gradient(transparent 70%, rgba(0,0,0,0.25));
+      transition: transform 0.3s;
+    }
+    .g-face:hover img { transform: scale(1.04); }
+    .g-caption {
+      position: absolute; bottom: -34px; left: 0; width: 100%;
+      text-align: center; color: var(--gold-light);
+      font-family: 'Playfair Display', serif;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    /* Carousel controls hint */
+    .carousel-hint {
+      text-align: center; margin-top: 52px;
+      font-size: 0.8rem; color: rgba(255,255,255,0.45);
+      letter-spacing: 1.5px; text-transform: uppercase;
+    }
+    .carousel-hint span { display:inline-block; margin: 0 6px; }
+
+    /* ===== FILTER TABS ===== */
+    .gallery-section { padding: 96px 5%; background: var(--cream); }
+    .gallery-inner { max-width: 1300px; margin: 0 auto; }
+    .section-label { display:inline-block; font-size:0.73rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--purple-mid); margin-bottom:10px; }
+    .section-title { font-size:clamp(1.8rem,3.5vw,2.6rem); color:var(--purple-dark); margin-bottom:16px; }
+    .section-title span { color:var(--purple-mid); }
+    .section-line { width:60px; height:3px; background:linear-gradient(to right,var(--gold),var(--gold-light)); border-radius:2px; margin-bottom:40px; }
+
+    .filter-bar {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      margin-bottom: 44px;
+    }
+    .filter-btn {
+      padding: 10px 22px; border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: var(--white); color: var(--text-mid);
+      font-family: 'Lato', sans-serif; font-size: 0.82rem;
+      font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      cursor: pointer; transition: all var(--transition);
+    }
+    .filter-btn:hover { border-color: var(--purple-mid); color: var(--purple-mid); background: var(--purple-pale); }
+    .filter-btn.active { background: var(--purple-mid); color: var(--white); border-color: var(--purple-mid); box-shadow: 0 4px 16px rgba(106,53,184,0.25); }
+
+    /* ===== MASONRY GRID ===== */
+    .masonry-grid {
+      columns: 4;
+      column-gap: 18px;
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 18px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .masonry-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .masonry-item img { width:100%; display:block; transition: transform 0.5s ease; }
+    .masonry-item:hover img { transform: scale(1.05); }
+    .masonry-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(59,31,110,0.82) 0%, transparent 55%);
+      opacity: 0; transition: opacity var(--transition);
+      display: flex; flex-direction: column;
+      align-items: flex-start; justify-content: flex-end;
+      padding: 18px;
+    }
+    .masonry-item:hover .masonry-overlay { opacity: 1; }
+    .masonry-overlay h4 { font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--white); margin-bottom:4px; }
+    .masonry-overlay span { font-size:0.72rem; color:rgba(255,255,255,0.65); letter-spacing:1.5px; text-transform:uppercase; }
+    .masonry-overlay .zoom-icon { position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.15); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; font-size:1rem; border:1px solid rgba(255,255,255,0.25); }
+
+    /* Hidden items for filter */
+    .masonry-item.hidden { display:none; }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 2000;
+      background: rgba(14,5,32,0.94); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center;
+      padding: 40px 20px;
+    }
+    .lightbox.open { display: flex; }
+    .lb-inner { position: relative; max-width: 900px; width: 100%; animation: lbFade 0.3s ease; }
+    @keyframes lbFade { from { opacity:0; transform:scale(0.94); } to { opacity:1; transform:scale(1); } }
+    .lb-inner img { width:100%; max-height:80vh; object-fit:contain; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border:1px solid rgba(240,208,128,0.2); }
+    .lb-caption { text-align:center; margin-top:18px; }
+    .lb-caption h3 { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--white); margin-bottom:4px; }
+    .lb-caption span { font-size:0.8rem; color:rgba(255,255,255,0.5); letter-spacing:1.5px; text-transform:uppercase; }
+    .lb-close { position:absolute; top:-48px; right:0; width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.2); color:var(--white); font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all var(--transition); }
+    .lb-close:hover { background:rgba(255,255,255,0.2); }
+    .lb-prev, .lb-next { position:absolute; top:50%; transform:translateY(-50%); width:48px; height:48px; border-radius:50%; background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.2); color:var(--white); font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all var(--transition); }
+    .lb-prev { left:-64px; }
+    .lb-next { right:-64px; }
+    .lb-prev:hover, .lb-next:hover { background:var(--purple-mid); border-color:var(--purple-mid); }
+
+    /* ===== CTA ===== */
+    .cta-banner { background:linear-gradient(135deg,var(--purple-dark),#21074d); padding:80px 5%; text-align:center; position:relative; overflow:hidden; }
+    .cta-banner::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 30% 60%,rgba(201,168,76,0.12),transparent 55%); }
+    .cta-banner > * { position:relative; z-index:1; }
+    .cta-banner h2 { font-size:clamp(1.7rem,3.5vw,2.6rem); color:var(--white); margin-bottom:16px; }
+    .cta-banner h2 span { color:var(--gold-light); }
+    .cta-banner p { font-size:1rem; color:rgba(255,255,255,0.72); margin-bottom:36px; max-width:520px; margin-left:auto; margin-right:auto; }
+    .btn-group { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 34px; border-radius:50px; font-size:0.88rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; cursor:pointer; border:none; transition:all var(--transition); }
+    .btn-primary { background:linear-gradient(135deg,var(--gold),#b8913e); color:var(--purple-dark); box-shadow:0 4px 24px rgba(201,168,76,0.35); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(201,168,76,0.45); }
+    .btn-outline { background:transparent; color:var(--white); border:2px solid rgba(255,255,255,0.4); }
+    .btn-outline:hover { background:rgba(255,255,255,0.10); transform:translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    footer { background:#0e0520; color:rgba(255,255,255,0.65); padding:52px 5% 28px; }
+    .footer-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px; padding-bottom:24px; border-bottom:1px solid rgba(255,255,255,0.08); }
+    .footer-brand-sm img { width:44px; height:44px; border-radius:50%; margin-bottom:8px; }
+    .footer-brand-sm h4 { font-family:'Playfair Display',serif; font-size:1rem; color:var(--white); }
+    .footer-brand-sm p { font-size:0.78rem; color:rgba(255,255,255,0.45); font-style:italic; margin-top:4px; }
+    .footer-links { display:flex; gap:22px; flex-wrap:wrap; }
+    .footer-links a { font-size:0.82rem; color:rgba(255,255,255,0.5); transition:color var(--transition); }
+    .footer-links a:hover { color:var(--gold-light); }
+    .footer-bottom { max-width:1200px; margin:20px auto 0; font-size:0.78rem; color:rgba(255,255,255,0.28); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+    .footer-bottom .gold { color:var(--gold-light); }
+
+    /* FADE IN */
+    .fade-in { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease,transform 0.65s ease; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) { .masonry-grid { columns: 3; } }
+    @media (max-width: 1024px) {
+      .lb-prev { left: -52px; }
+      .lb-next { right: -52px; }
+    }
+    @media (max-width: 899px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .masonry-grid { columns: 2; }
+      .gallery-3d { width:140px; height:190px; }
+      .g-face { width:140px; height:190px; transform: rotateY(calc(var(--i) * 45deg)) translateZ(320px); }
+      .carousel-stage { height:300px; }
+      .lb-prev { left: -16px; }
+      .lb-next { right: -16px; }
+    }
+    @media (max-width: 599px) {
+      .navbar { padding:0 4%; height:64px; }
+      .mobile-nav { top:64px; }
+      .page-hero-inner { padding:64px 4% 72px; }
+      .page-hero h1 { font-size:2rem; }
+      .gallery-section { padding:60px 4%; }
+      .carousel-section { padding:60px 4%; }
+      .masonry-grid { columns: 2; column-gap: 12px; }
+      .masonry-item { margin-bottom: 12px; }
+      .filter-btn { padding: 8px 16px; font-size: 0.75rem; }
+      .btn-group { flex-direction:column; align-items:center; }
+      .btn { width:100%; max-width:280px; justify-content:center; }
+      .footer-inner { flex-direction:column; }
+      .footer-bottom { flex-direction:column; }
+      .gallery-3d { width:120px; height:160px; }
+      .g-face { width:120px; height:160px; transform: rotateY(calc(var(--i) * 45deg)) translateZ(260px); }
+      .carousel-stage { height:250px; }
+    }
+    @media (max-width: 479px) {
+      .page-hero h1 { font-size:1.7rem; }
+      .masonry-grid { columns: 1; max-width: 400px; margin: 0 auto; }
+      .lb-prev, .lb-next { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img src="logo2.png" alt="Beatee Logo">
+      <div class="nav-logo-text">Beatee Agro-Processing<span>Bringer of Joy</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="Production Process.html">Process</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html" onclick="closeMobileNav()">Home</a>
+    <a href="about.html" onclick="closeMobileNav()">About Us</a>
+    <a href="gallery.html" onclick="closeMobileNav()">Gallery</a>
+    <a href="Production Process.html" onclick="closeMobileNav()">Our Process</a>
+    <a href="contact.html" onclick="closeMobileNav()">Contact Us</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <div class="page-hero-inner fade-in">
+      <div class="hero-badge">A Visual Showcase of Our Craft</div>
+      <h1>Our <span>Gallery</span></h1>
+      <div class="hero-divider"></div>
+      <p>Step inside Beatee Agro-Processing — from golden Gari grains to our full product range, see the joy and craft behind every pack.</p>
+    </div>
+  </header>
+
+  <!-- 3D CAROUSEL -->
+  <section class="carousel-section">
+    <div class="carousel-section-inner">
+      <div class="cs-header fade-in">
+        <span class="section-label-light">360° Showcase</span>
+        <h2>Spin Through Our <span>Products</span></h2>
+        <div class="cs-divider"></div>
+      </div>
+      <div class="carousel-stage">
+        <div class="gallery-3d" id="gallery3d">
+          <div class="g-face" style="--i:1"><img src="raw.jpg" alt="Raw Gari"><p class="g-caption">Raw Gari</p></div>
+          <div class="g-face" style="--i:2"><img src="margarine.jpg" alt="Margarine Gari"><p class="g-caption">Margarine Gari</p></div>
+          <div class="g-face" style="--i:3"><img src="soya.jpg" alt="Soya Bean Gari"><p class="g-caption">Soya Beans Gari</p></div>
+          <div class="g-face" style="--i:4"><img src="Coconut.jpg" alt="Coconut Gari"><p class="g-caption">Coconut Gari</p></div>
+          <div class="g-face" style="--i:5"><img src="logo2.jpg" alt="Logo"><p class="g-caption">Beatee Logo</p></div>
+          <div class="g-face" style="--i:6"><img src="Packaging.jpg" alt="All Products"><p class="g-caption">All Products</p></div>
+          <div class="g-face" style="--i:7"><img src="Girls.jpg" alt="Bringer of Joy"><p class="g-caption">Bringer of Joy</p></div>
+          <div class="g-face" style="--i:8"><img src="tapioca.jpg" alt="Tapioca"><p class="g-caption">Tapioca</p></div>
+        </div>
+      </div>
+      <p class="carousel-hint"><span>⟳</span> Auto-rotating · <span>⏸</span> Hover to pause</p>
+    </div>
+  </section>
+
+  <!-- GALLERY GRID -->
+  <section class="gallery-section">
+    <div class="gallery-inner">
+      <span class="section-label">Photo Gallery</span>
+      <h2 class="section-title">Browse Our <span>Full Collection</span></h2>
+      <div class="section-line"></div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-bar fade-in">
+        <button class="filter-btn active" onclick="filterGallery('all', this)">All Photos</button>
+        <button class="filter-btn" onclick="filterGallery('products', this)">Products</button>
+        <button class="filter-btn" onclick="filterGallery('packaging', this)">Packaging</button>
+        <button class="filter-btn" onclick="filterGallery('process', this)">Process</button>
+        <button class="filter-btn" onclick="filterGallery('team', this)">Team &amp; Brand</button>
+      </div>
+
+      <!-- Masonry Grid -->
+      <div class="masonry-grid fade-in" id="masonryGrid">
+
+        <!-- PRODUCTS -->
+        <div class="masonry-item" data-cat="products" onclick="openLightbox(0)">
+          <img src="raw.jpg" alt="Raw Gari">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Raw Gari</h4>
+            <span>Products</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="products" onclick="openLightbox(1)">
+          <img src="margarine.jpg" alt="Margarine Gari">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Margarine Gari</h4>
+            <span>Products</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="products" onclick="openLightbox(2)">
+          <img src="soya.jpg" alt="Soya Beans Gari">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Soya Beans Gari</h4>
+            <span>Products</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="products" onclick="openLightbox(3)">
+          <img src="Coconut.jpg" alt="Coconut Gari">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Coconut Gari</h4>
+            <span>Products</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="products" onclick="openLightbox(4)">
+          <img src="tapioca.jpg" alt="Tapioca Gari">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Tapioca (Starch Gari)</h4>
+            <span>Products</span>
+          </div>
+        </div>
+
+        <!-- PACKAGING -->
+        <div class="masonry-item" data-cat="packaging" onclick="openLightbox(5)">
+          <img src="Packaging.jpg" alt="All Products Packaged">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>All Products</h4>
+            <span>Packaging</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="packaging" onclick="openLightbox(6)">
+          <img src="pic1.png" alt="Raw Gari Pack">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Raw Gari Pack</h4>
+            <span>Packaging</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="packaging" onclick="openLightbox(7)">
+          <img src="pic2.png" alt="Coconut Gari Pack">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Coconut Gari Pack</h4>
+            <span>Packaging</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="packaging" onclick="openLightbox(8)">
+          <img src="pic3.jpg" alt="Margarine Gari Pack">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Margarine Gari Pack</h4>
+            <span>Packaging</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="packaging" onclick="openLightbox(9)">
+          <img src="pic4.jpg" alt="Soya Beans Gari Pack">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Soya Beans Gari Pack</h4>
+            <span>Packaging</span>
+          </div>
+        </div>
+
+        <!-- PROCESS -->
+        <div class="masonry-item" data-cat="process" onclick="openLightbox(10)">
+          <img src="Harvesting1.jpg" alt="Harvesting">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Harvesting</h4>
+            <span>Process</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="process" onclick="openLightbox(11)">
+          <img src="Harvesting2.jpg" alt="Fresh Cassava">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Fresh Cassava</h4>
+            <span>Process</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="process" onclick="openLightbox(12)">
+          <img src="Harvesting3.jpg" alt="Off Loading">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Off-Loading Cassava</h4>
+            <span>Process</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="process" onclick="openLightbox(13)">
+          <img src="Peeling1.jpg" alt="Peeling">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Peeling — Stage I</h4>
+            <span>Process</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="process" onclick="openLightbox(14)">
+          <img src="Peeling2.jpg" alt="Peeling II">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Peeling — Stage II</h4>
+            <span>Process</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="process" onclick="openLightbox(15)">
+          <img src="grating.jpg" alt="Grating">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Grating</h4>
+            <span>Process</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="process" onclick="openLightbox(16)">
+          <img src="Roasting1.jpg" alt="Roasting">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Roasting</h4>
+            <span>Process</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="process" onclick="openLightbox(17)">
+          <img src="Sieving.jpg" alt="Sieving">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Cooling &amp; Sieving</h4>
+            <span>Process</span>
+          </div>
+        </div>
+
+        <!-- TEAM & BRAND -->
+        <div class="masonry-item" data-cat="team" onclick="openLightbox(18)">
+          <img src="Girls.jpg" alt="Bringer of Joy">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Bringer of Joy</h4>
+            <span>Team &amp; Brand</span>
+          </div>
+        </div>
+        <div class="masonry-item" data-cat="team" onclick="openLightbox(19)">
+          <img src="logo2.png" alt="Beatee Logo">
+          <div class="masonry-overlay">
+            <span class="zoom-icon">🔍</span>
+            <h4>Our Brand Logo</h4>
+            <span>Team &amp; Brand</span>
+          </div>
+        </div>
+
+      </div><!-- end masonry -->
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <div class="lb-inner">
+      <button class="lb-close" onclick="closeLightbox()">✕</button>
+      <button class="lb-prev" onclick="changeLightbox(-1)">&#8592;</button>
+      <button class="lb-next" onclick="changeLightbox(1)">&#8594;</button>
+      <img id="lbImg" src="" alt="">
+      <div class="lb-caption">
+        <h3 id="lbTitle"></h3>
+        <span id="lbCat"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-banner">
+    <h2>Taste the <span>Joy of Ghana</span></h2>
+    <p>Explore our products, learn how we make our Gari, or get in touch to place your order today.</p>
+    <div class="btn-group">
+      <a href="index.html" class="btn btn-primary">Back to Home</a>
+      <a href="Production Process.html" class="btn btn-outline">Our Process</a>
+      <a href="contact.html" class="btn btn-outline">Contact Us</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand-sm">
+        <img src="logo2.png" alt="Beatee Logo">
+        <h4>Beatee Agro-Processing</h4>
+        <p>"Bringer of Joy" — Made in Ghana</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="Production Process.html">Process</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Beatee Agro-Processing. All rights reserved.</span>
+      <span>Made with ❤️ in <span class="gold">Ghana</span></span>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Filter
+    function filterGallery(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.masonry-item').forEach(item => {
+        if (cat === 'all' || item.dataset.cat === cat) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    }
+
+    // Lightbox
+    const items = Array.from(document.querySelectorAll('.masonry-item'));
+    let currentIdx = 0;
+
+    function getVisibleItems() {
+      return items.filter(i => !i.classList.contains('hidden'));
+    }
+
+    function openLightbox(globalIdx) {
+      currentIdx = globalIdx;
+      const item = items[globalIdx];
+      const img = item.querySelector('img');
+      const title = item.querySelector('h4');
+      const cat = item.querySelector('span:not(.zoom-icon)');
+      document.getElementById('lbImg').src = img.src;
+      document.getElementById('lbImg').alt = img.alt;
+      document.getElementById('lbTitle').textContent = title ? title.textContent : '';
+      document.getElementById('lbCat').textContent = cat ? cat.textContent : '';
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeLightboxOnBg(e) {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    function changeLightbox(dir) {
+      const visible = getVisibleItems();
+      const visIdx = visible.indexOf(items[currentIdx]);
+      const next = (visIdx + dir + visible.length) % visible.length;
+      const nextItem = visible[next];
+      currentIdx = items.indexOf(nextItem);
+      const img = nextItem.querySelector('img');
+      const title = nextItem.querySelector('h4');
+      const cat = nextItem.querySelector('span:not(.zoom-icon)');
+      document.getElementById('lbImg').src = img.src;
+      document.getElementById('lbImg').alt = img.alt;
+      document.getElementById('lbTitle').textContent = title ? title.textContent : '';
+      document.getElementById('lbCat').textContent = cat ? cat.textContent : '';
+    }
+
+    // Keyboard nav for lightbox
+    document.addEventListener('keydown', (e) => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') changeLightbox(-1);
+      if (e.key === 'ArrowRight') changeLightbox(1);
+    });
+  </script>
+</body>
+</html>
