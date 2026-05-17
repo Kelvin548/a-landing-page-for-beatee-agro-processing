@@ -1,186 +1,782 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Gari Factory</title>
-    <link rel="stylesheet" href="style.css"> <!-- link your CSS file here -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Beatee Agro-Processing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-   .team-section {
+    /* ========== CSS VARIABLES ========== */
+    :root {
+      --purple-dark:   #3b1f6e;
+      --purple-mid:    #6a35b8;
+      --purple-light:  #9b6ddb;
+      --purple-pale:   #f3eeff;
+      --gold:          #c9a84c;
+      --gold-light:    #f0d080;
+      --cream:         #faf8ff;
+      --white:         #ffffff;
+      --text-dark:     #1e1530;
+      --text-mid:      #4a3870;
+      --text-light:    #7a6a9a;
+      --border:        rgba(106,53,184,0.15);
+      --shadow-sm:     0 2px 12px rgba(59,31,110,0.09);
+      --shadow-md:     0 6px 32px rgba(59,31,110,0.13);
+      --shadow-lg:     0 16px 56px rgba(59,31,110,0.17);
+      --radius:        14px;
+      --radius-lg:     24px;
+      --transition:    0.35s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ========== RESET ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 72px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(59,31,110,0.10);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--purple-dark); line-height: 1.15;
+    }
+    .nav-logo-text span {
+      display: block; font-size: 0.64rem; font-family: 'Lato', sans-serif;
+      font-weight: 400; color: var(--text-light); letter-spacing: 1.5px; text-transform: uppercase;
+    }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--text-mid);
+      position: relative; padding-bottom: 4px; transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--purple-mid); transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--purple-dark); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--purple-mid); }
+    .nav-links a.active::after { width: 100%; }
+    .nav-cta {
+      background: var(--purple-mid) !important; color: var(--white) !important;
+      padding: 10px 22px !important; border-radius: 50px !important;
+    }
+    .nav-cta:hover { background: var(--purple-dark) !important; }
+    .nav-cta::after { display: none !important; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 6px;
+    }
+    .hamburger span {
+      display: block; width: 26px; height: 2.5px;
+      background: var(--purple-dark); border-radius: 4px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+      background: var(--white); z-index: 999;
+      flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Playfair Display', serif; font-size: 1.6rem;
+      color: var(--purple-dark); font-weight: 700;
+    }
+    .mobile-nav a:hover { color: var(--purple-mid); }
+
+    /* ========== PAGE HERO ========== */
+    .page-hero {
+      padding-top: 72px;
+      background: linear-gradient(135deg, var(--purple-dark) 0%, #21074d 60%, #3b1f6e 100%);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 15% 85%, rgba(201,168,76,0.13) 0%, transparent 50%),
+                  radial-gradient(circle at 85% 15%, rgba(155,109,219,0.18) 0%, transparent 50%);
+    }
+    .page-hero-inner {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 5% 90px;
       text-align: center;
-      padding: 40px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.18); border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light); border-radius: 50px;
+      padding: 7px 20px; font-size: 0.75rem; letter-spacing: 2px;
+      text-transform: uppercase; font-weight: 700; margin-bottom: 24px;
+    }
+    .page-hero h1 {
+      font-size: clamp(2.2rem, 5.5vw, 4rem); color: var(--white);
+      font-weight: 900; margin-bottom: 20px; line-height: 1.15;
+    }
+    .page-hero h1 span { color: var(--gold-light); }
+    .hero-divider {
+      width: 70px; height: 3px; margin: 0 auto 24px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light)); border-radius: 2px;
+    }
+    .page-hero p {
+      font-size: 1.07rem; color: rgba(255,255,255,0.78);
+      line-height: 1.8; max-width: 660px; margin: 0 auto;
     }
 
-    .team-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+    /* ========== QUICK STATS ========== */
+    .quick-stats {
+      background: var(--purple-dark);
+      padding: 0 5%;
+    }
+    .stats-row {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-box {
+      padding: 36px 20px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-box:last-child { border-right: none; }
+    .stat-box .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 700; color: var(--gold-light); line-height: 1;
+    }
+    .stat-box .lbl {
+      font-size: 0.78rem; color: rgba(255,255,255,0.55);
+      letter-spacing: 1.5px; text-transform: uppercase; margin-top: 6px;
     }
 
-   .team-member {
-      background: white;
-      border-radius: 15px;
-      padding: 15px;
-      width: 250px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    /* ========== SECTION LAYOUT ========== */
+    .page-section { padding: 96px 5%; }
+    .page-section.alt-bg { background: var(--white); }
+    .page-section.dark-bg {
+      background: linear-gradient(135deg, var(--purple-dark), #21074d);
+    }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      display: inline-block; font-size: 0.73rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase; color: var(--purple-mid); margin-bottom: 10px;
+    }
+    .dark-bg .section-label { color: var(--gold-light); }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--purple-dark); margin-bottom: 16px;
+    }
+    .dark-bg .section-title { color: var(--white); }
+    .section-title span { color: var(--purple-mid); }
+    .dark-bg .section-title span { color: var(--gold-light); }
+    .section-line {
+      width: 60px; height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      border-radius: 2px; margin-bottom: 40px;
     }
 
-   .team-member img {
-      width: 100%;
-      border-radius: 10px;
-      height: 300px;
-      object-fit: cover;
+    /* ========== HISTORY SECTION ========== */
+    .history-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start;
+    }
+    .history-text p {
+      font-size: 0.97rem; color: var(--text-mid); line-height: 1.9; margin-bottom: 20px;
+    }
+    .history-text p:last-child { margin-bottom: 0; }
+    .history-text strong { color: var(--purple-dark); }
+
+    /* Timeline milestones */
+    .milestones { display: flex; flex-direction: column; gap: 0; }
+    .milestone {
+      display: grid; grid-template-columns: 80px 1fr; gap: 0 24px;
+      position: relative;
+    }
+    .milestone:not(:last-child) .m-year-col::after {
+      content: '';
+      position: absolute; left: 40px; top: 52px;
+      width: 2px; bottom: 0;
+      background: linear-gradient(to bottom, var(--purple-light), rgba(106,53,184,0.1));
+      transform: translateX(-50%);
+    }
+    .m-year-col { position: relative; display: flex; flex-direction: column; align-items: center; padding-top: 6px; }
+    .m-dot {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple-mid), var(--purple-dark));
+      display: flex; align-items: center; justify-content: center;
+      border: 3px solid var(--white); outline: 2px solid var(--purple-light);
+      box-shadow: var(--shadow-sm); flex-shrink: 0;
+    }
+    .m-dot span {
+      font-family: 'Playfair Display', serif; font-size: 0.68rem; font-weight: 700;
+      color: var(--white); text-align: center; line-height: 1.1;
+    }
+    .m-body { padding: 4px 0 32px; }
+    .m-body h4 { font-size: 1rem; color: var(--purple-dark); margin-bottom: 6px; }
+    .m-body p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.7; }
+
+    /* ========== MISSION & VISION ========== */
+    .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .mv-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg); padding: 44px 36px;
+      transition: background var(--transition);
+    }
+    .mv-card:hover { background: rgba(255,255,255,0.11); }
+    .mv-icon { font-size: 2.4rem; margin-bottom: 18px; }
+    .mv-card h3 {
+      font-size: 1.3rem; color: var(--gold-light); margin-bottom: 14px;
+    }
+    .mv-card p { font-size: 0.96rem; color: rgba(255,255,255,0.78); line-height: 1.85; }
+
+    /* Values */
+    .values-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px;
+    }
+    .value-pill {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px; padding: 14px 20px;
+    }
+    .value-pill .icon { font-size: 1.2rem; }
+    .value-pill span { font-size: 0.85rem; color: rgba(255,255,255,0.8); font-weight: 700; }
+
+    /* ========== TEAM SECTION ========== */
+    .team-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 16px;
+    }
+    .team-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      overflow: hidden; border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition);
+      text-align: center;
+    }
+    .team-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .team-img-wrap { overflow: hidden; position: relative; }
+    .team-img-wrap img {
+      width: 100%; height: 320px; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .team-card:hover .team-img-wrap img { transform: scale(1.05); }
+    .team-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(59,31,110,0.65), transparent 50%);
+      opacity: 0; transition: opacity var(--transition);
+    }
+    .team-card:hover .team-img-overlay { opacity: 1; }
+    .team-card-body { padding: 24px 22px 28px; }
+    .team-card-body h3 {
+      font-size: 1.1rem; color: var(--purple-dark); margin-bottom: 6px;
+    }
+    .team-role {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--purple-mid);
+      background: var(--purple-pale); border-radius: 50px;
+      padding: 4px 14px; margin-bottom: 12px;
+    }
+    .team-card-body p { font-size: 0.88rem; color: var(--text-light); line-height: 1.65; }
+
+    /* ========== CONTACT SECTION ========== */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+    }
+    .contact-intro p {
+      font-size: 0.97rem; color: var(--text-mid); line-height: 1.85; margin-bottom: 28px;
+    }
+    .contact-cards { display: flex; flex-direction: column; gap: 16px; }
+    .contact-card {
+      display: flex; align-items: flex-start; gap: 18px;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .contact-card:hover { transform: translateX(4px); box-shadow: var(--shadow-md); }
+    .contact-icon {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      background: var(--purple-pale);
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    }
+    .contact-info strong {
+      display: block; font-size: 0.78rem; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--purple-mid); font-weight: 700; margin-bottom: 6px;
+    }
+    .contact-info span { font-size: 0.93rem; color: var(--text-dark); line-height: 1.6; }
+
+    /* Map placeholder */
+    .map-box {
+      background: linear-gradient(135deg, var(--purple-pale), #ede6ff);
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      height: 340px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      text-align: center; padding: 32px;
+    }
+    .map-box .map-icon { font-size: 3.5rem; }
+    .map-box h4 { font-size: 1.15rem; color: var(--purple-dark); }
+    .map-box p { font-size: 0.88rem; color: var(--text-light); line-height: 1.6; }
+
+    /* ========== CTA FOOTER BANNER ========== */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--purple-dark), #21074d);
+      padding: 80px 5%; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 60%, rgba(201,168,76,0.12), transparent 55%);
+    }
+    .cta-banner > * { position: relative; z-index: 1; }
+    .cta-banner h2 { font-size: clamp(1.7rem, 3.5vw, 2.6rem); color: var(--white); margin-bottom: 16px; }
+    .cta-banner h2 span { color: var(--gold-light); }
+    .cta-banner p { font-size: 1rem; color: rgba(255,255,255,0.72); margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 34px; border-radius: 50px;
+      font-size: 0.88rem; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; cursor: pointer; border: none; transition: all var(--transition);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #b8913e);
+      color: var(--purple-dark); box-shadow: 0 4px 24px rgba(201,168,76,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.45); }
+    .btn-outline {
+      background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.4);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.10); transform: translateY(-2px); }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: #0e0520; color: rgba(255,255,255,0.65); padding: 52px 5% 28px;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 24px;
+      padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand-sm img { width: 44px; height: 44px; border-radius: 50%; margin-bottom: 8px; }
+    .footer-brand-sm h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); }
+    .footer-brand-sm p { font-size: 0.78rem; color: rgba(255,255,255,0.45); font-style: italic; margin-top: 4px; }
+    .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.5); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-bottom {
+      max-width: 1200px; margin: 20px auto 0;
+      font-size: 0.78rem; color: rgba(255,255,255,0.28);
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
     }
 
-  .team-member h3 {
-     margin-top: 10px;
-     color: #e8b923;
-  }
+    /* ========== ANIMATIONS ========== */
+    .fade-in { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-   .back-home {
-     text-align: center;
-     margin: 30px 0;
+    /* ========== RESPONSIVE ========== */
+
+    /* Large Desktop 1440px+ */
+    @media (min-width: 1440px) {
+      .section-inner { max-width: 1360px; }
     }
 
-   .back-home a {
-     text-decoration: none;
-     background-color: #e8b923;
-     color: white;
-     padding: 10px 20px;
-     border-radius: 10px;
-     font-weight: bold;
-     transition: background 0.3s;
+    /* Tablet Landscape 900px – 1024px */
+    @media (max-width: 1024px) {
+      .history-grid { grid-template-columns: 1fr; gap: 56px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .map-box { height: 280px; }
+      .team-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .mv-grid { grid-template-columns: 1fr; }
+      .values-row { grid-template-columns: 1fr 1fr; }
     }
 
-    .back-home a:hover {
-      background-color: #c79c10;
+    /* Tablet Portrait 600px – 899px */
+    @media (max-width: 899px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page-section { padding: 72px 5%; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .stat-box { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .stat-box:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.08); }
+      .stat-box:nth-last-child(-n+2) { border-bottom: none; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .values-row { grid-template-columns: 1fr 1fr; }
     }
-    @keyframes fadeIn {
-     from {
-        opacity: 0;
-        transform: translateY(20px);
+
+    /* Mobile Large 480px – 599px */
+    @media (max-width: 599px) {
+      .navbar { padding: 0 4%; height: 64px; }
+      .mobile-nav { top: 64px; }
+      .page-hero-inner { padding: 64px 4% 72px; }
+      .page-hero h1 { font-size: 2rem; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+      .values-row { grid-template-columns: 1fr; }
+      .mv-grid { grid-template-columns: 1fr; }
+      .btn-group { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 280px; justify-content: center; }
+      .footer-inner { flex-direction: column; }
+      .footer-bottom { flex-direction: column; }
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    /* Mobile Small 320px – 479px */
+    @media (max-width: 479px) {
+      .page-hero h1 { font-size: 1.7rem; }
+      .section-title { font-size: 1.5rem; }
+      .page-section { padding: 56px 4%; }
+      .stats-row { grid-template-columns: 1fr; }
+      .stat-box { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .stat-box:last-child { border-bottom: none; }
+      .milestone { grid-template-columns: 60px 1fr; }
+      .m-dot { width: 40px; height: 40px; }
+      .milestone:not(:last-child) .m-year-col::after { left: 30px; }
+      .map-box { height: 220px; }
+      .footer-links { flex-direction: column; gap: 10px; }
+      .mv-card { padding: 30px 22px; }
     }
-  }
-     .about-section,
-     .team-section,
-     .back-home {
-        animation: fadeIn 1s ease-in-out;
-      }
-
-      .team-member img {
-         transition: transform 0.3s, box-shadow 0.3s;
-      }
-
-     .team-member img:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      }
-
-      header {
-         animation: fadeIn 1s ease-in-out;
-      }
-
-      .quality-box {
-        border-left: 4px solid #ccc; /* the vertical line */
-        padding-left: 15px;          /* space between text and line */
-        margin: 20px 0 20px +80px;              /* space around the box */
-        background-color: transparent;
-      }
-      #margin{
-       margin: 20px 0 20px +70px;
-      }
-
-    </style>
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1 style="margin:20px 0 20px +50px;">About Our Gari Factory</h1>
-    </header>
-
-    <section class="about-section">
-        <h2 id="margin">History</h2>
-        <div class="quality-box">
-        <p>
-           <h3><b> Factory History of Beatee Agro-Processing</b> </h3>
-           Beatee Agro-Processing, located in <b> Warakese, Mampong-Ashanti,</b> stands as a remarkable example of perseverance, innovation, and family-driven entrepreneurship. 
-           Its roots trace back to <b>1981,</b> when <b>Stella Anane,</b> a visionary woman and devoted mother, began roasting gari using a small rounded pan primarily to feed her family during that year. What started as a modest effort to sustain her household soon blossomed into a small-scale gari production venture.<br><br>
-           Initially, the factory was named <b> Nyame Na Ayɛ Gari Factory,</b> reflecting Stella’s deep faith and gratitude to God. However, when it became necessary to officially register the business, her daughter, Afi Juliana Yamenuie, took up the mantle. Upon attempting to register the factory, they discovered that the original name had already been claimed. 
-           They then opted for a new name: <b>DAGBA Gari Factory</b> a compromise, though later it turned out the intended name was <b>Daavi Gari Factory,</b> and the spelling was mistakenly registered as "DAGBA," a name with no clear meaning to the family. The factory was register on the <b> 11th day of November 2014.</b> 
-           <br><br>
-           As the matriarch Stella Anane passed away, her daughter <b>Juliana Afi Yamenu</b> fully took over the operations, funding the business with her personal savings. Despite her limited formal education, Juliana pressed forward with determination. She was greatly supported by her own daughter,<b> Beatrice Ayawo Nyamadzorse,</b> who assisted with managing and modernizing the business. 
-           <br><br>
-           A significant turning point came in <b>2020,</b> when the factory diversified its offerings. Moving beyond the production of plain gari to different kinds of gari.<b> Beatee Agro-Processing</b> began innovating by introducing fortified gari products to the local market. These included:<br>
-            <ul style="font-family: 'Times New Roman', Times, serif;">
-            <b><li>Fortified Coconut Gari</li>
-              <li>Fortified Margarine Gari</li>
-              <li>Fortified Soya Bean Gari</li></b>
-            </ul>
-            This innovation not only added value to the traditional gari product but also positioned the factory as a forward-thinking agro-processing enterprise in the region.
-            Despite the initial brand confusion surrounding the name "DAGBA," and the increasing number of customers asking for the meaning of the name, the family made a decisive branding change. 
-            They rebranded the business under a name that was more personal, meaningful, and reflective of the family’s efforts and leadership. Hence, the factory was renamed Beatee Agro-Processing, inspired by Beatrice’s support and involvement in the growth of the business.
-            <br><br>
-            Today, <b> Beatee Agro-Processing</b> stands as a symbol of resilience, generational effort, and innovation in local agro-processing. From humble beginnings to a registered and evolving enterprise, the factory not only contributes to local employment and food processing but also demonstrates how traditional skills can be passed down, reimagined, and scaled for the future.
-
-        </p>
-        </div>
-        <hr style="width: 80%; margin: 20px auto; ">
-        <h2 id="margin">Our Mission</h2>
-        <div class="quality-box">
-        <p>
-            To deliver healthy, tasty, and affordable Gari to every household,
-            while empowering local farmers and supporting sustainable agriculture.
-            And also to add value to cassava through innovation, fortification, and sustainable processing empowering local farmers, creating decent work opportunities for the youth, enriching communities, and delivering healthy, high-quality foods to markets across Africa and beyond.
-            <h3>Vision;</h3>
-            To become a leading African brand in nutritious cassava-based foods, transforming local harvests into global nourishment.
-        </p>
-        </div>
-        <hr style="width: 80%; margin: 20px auto; ">
-        <section class="team-section">
-    <h2>Meet Our Team</h2>
-
-    <div class="team-container">
-        <div class="team-member">
-            <img src="staff1.jpg" alt="Staff 1">
-            <h3>Juliana Afi Yamenu</h3>
-            <p>Production Manager</p>
-        </div>
-
-        <div class="team-member">
-            <img src="bee.jpg" alt="Staff 2">
-            <h3>Beatrice Ayawo Nyamadzorse</h3>
-            <p>Quality Control Officer</p>
-        </div>
-
-        <div class="team-member">
-            <img src="staff3.jpg" alt="Staff 3">
-            <h3>kojo Tawiah Yovogan</h3>
-            <p>Marketing Lead</p>
-        </div>
-    </div>
-    </section>
-      <hr style="width: 80%; margin: 20px auto; ">
-        <h2  id="margin">Contact Information</h2>
-        <div class="quality-box">
-        <p>
-            📞 054-064-5738<br>
-            📞 024-949-9412<br>
-            📞 054-489-3582<br>
-            📧 beateeagroprocessing@gmail.com<br>
-            📍 Located in Ashante Region, Mampong
-        </p>
-        </div>
-      <hr style="width: 80%; margin: 20px auto; ">
-      <div class="back-home">
-        <a href="index.html">Back to Home</a>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img src="logo2.png" alt="Beatee Logo">
+      <div class="nav-logo-text">
+        Beatee Agro-Processing
+        <span>Bringer of Joy</span>
       </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About Us</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="Production Process.html">Process</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-    </section>
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html" onclick="closeMobileNav()">Home</a>
+    <a href="about.html" onclick="closeMobileNav()">About Us</a>
+    <a href="gallery.html" onclick="closeMobileNav()">Gallery</a>
+    <a href="Production Process.html" onclick="closeMobileNav()">Our Process</a>
+    <a href="contact.html" onclick="closeMobileNav()">Contact Us</a>
+  </div>
 
-  </body>
+  <!-- ===== PAGE HERO ===== -->
+  <header class="page-hero">
+    <div class="page-hero-inner fade-in">
+      <div class="hero-badge">Est. 1981 · Warakese, Mampong-Ashanti</div>
+      <h1>About <span>Beatee Agro-Processing</span></h1>
+      <div class="hero-divider"></div>
+      <p>From a small rounded pan in 1981 to a thriving agro-processing enterprise — our story is one of resilience, generational dedication, and the joy of feeding Ghana with pride.</p>
+    </div>
+  </header>
+
+  <!-- ===== QUICK STATS ===== -->
+  <div class="quick-stats">
+    <div class="stats-row">
+      <div class="stat-box fade-in">
+        <div class="num">1981</div>
+        <div class="lbl">Year Founded</div>
+      </div>
+      <div class="stat-box fade-in">
+        <div class="num">40+</div>
+        <div class="lbl">Years of Experience</div>
+      </div>
+      <div class="stat-box fade-in">
+        <div class="num">2020</div>
+        <div class="lbl">Fortified Products Launch</div>
+      </div>
+      <div class="stat-box fade-in">
+        <div class="num">3+</div>
+        <div class="lbl">Generations of Passion</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HISTORY ===== -->
+  <section class="page-section" id="history">
+    <div class="section-inner">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">A Legacy Born from <span>Faith &amp; Family</span></h2>
+      <div class="section-line"></div>
+      <div class="history-grid">
+
+        <div class="history-text fade-in">
+          <p>Beatee Agro-Processing, located in <strong>Warakese, Mampong-Ashanti</strong>, stands as a remarkable example of perseverance, innovation, and family-driven entrepreneurship. Its roots trace back to <strong>1981</strong>, when <strong>Stella Anane</strong>, a visionary woman and devoted mother, began roasting gari using a small rounded pan — primarily to feed her family.</p>
+
+          <p>What started as a modest effort to sustain her household soon blossomed into a small-scale gari production venture. The factory was initially named <strong>Nyame Na Ayɛ Gari Factory</strong>, reflecting Stella's deep faith and gratitude to God.</p>
+
+          <p>When official registration became necessary, her daughter <strong>Juliana Afi Yamenu</strong> took up the mantle. The name was updated to <strong>DAGBA Gari Factory</strong> and formally registered on the <strong>11th of November 2014</strong>.</p>
+
+          <p>As the matriarch Stella Anane passed away, Juliana fully took over operations, supported greatly by her own daughter <strong>Beatrice Ayawo Nyamadzorse</strong>, who helped modernise and grow the business. The factory was renamed <strong>Beatee Agro-Processing</strong> — inspired by Beatrice's vital role — a name that is personal, meaningful, and full of family pride.</p>
+
+          <p>Today, Beatee Agro-Processing stands as a symbol of <strong>resilience, generational effort, and innovation</strong> in local agro-processing — demonstrating how traditional skills can be passed down, reimagined, and scaled for the future.</p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="milestones fade-in">
+          <div class="milestone">
+            <div class="m-year-col">
+              <div class="m-dot"><span>1981</span></div>
+            </div>
+            <div class="m-body">
+              <h4>The Beginning</h4>
+              <p>Stella Anane begins roasting gari in a small rounded pan to feed her family in Warakese, Mampong-Ashanti.</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <div class="m-year-col">
+              <div class="m-dot"><span>Early<br>Days</span></div>
+            </div>
+            <div class="m-body">
+              <h4>Nyame Na Ayɛ Gari Factory</h4>
+              <p>The first name — a reflection of Stella's deep faith and gratitude to God for sustaining the family business.</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <div class="m-year-col">
+              <div class="m-dot"><span>2014</span></div>
+            </div>
+            <div class="m-body">
+              <h4>Official Registration</h4>
+              <p>Juliana Afi Yamenu officially registers the factory as DAGBA Gari Factory on the 11th of November 2014.</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <div class="m-year-col">
+              <div class="m-dot"><span>2020</span></div>
+            </div>
+            <div class="m-body">
+              <h4>Fortified Products Launch</h4>
+              <p>A major turning point — the factory diversifies beyond plain gari, introducing Coconut, Margarine, and Soya Bean fortified varieties.</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <div class="m-year-col">
+              <div class="m-dot"><span>Today</span></div>
+            </div>
+            <div class="m-body">
+              <h4>Beatee Agro-Processing</h4>
+              <p>Rebranded and reimagined — a growing enterprise contributing to local employment, food security, and Ghanaian pride.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MISSION & VISION ===== -->
+  <section class="page-section dark-bg" id="mission">
+    <div class="section-inner">
+      <div style="text-align:center; margin-bottom: 52px;">
+        <span class="section-label">Our Purpose</span>
+        <h2 class="section-title">Mission, <span>Vision</span> &amp; Values</h2>
+        <div class="section-line" style="margin: 0 auto 0;"></div>
+      </div>
+      <div class="mv-grid fade-in">
+        <div class="mv-card">
+          <div class="mv-icon">🎯</div>
+          <h3>Our Mission</h3>
+          <p>To deliver healthy, tasty, and affordable Gari to every household, while empowering local farmers and supporting sustainable agriculture. We add value to cassava through innovation, fortification, and sustainable processing — creating decent work opportunities for the youth, enriching communities, and delivering high-quality foods to markets across Africa and beyond.</p>
+        </div>
+        <div class="mv-card">
+          <div class="mv-icon">🌍</div>
+          <h3>Our Vision</h3>
+          <p>To become a leading African brand in nutritious cassava-based foods, transforming local harvests into global nourishment. We envision a future where every pack of BEA TEE Gari carries the legacy of Ghanaian excellence to tables across the world — nourishing families near and far.</p>
+        </div>
+      </div>
+      <div class="values-row fade-in">
+        <div class="value-pill"><span class="icon">🌿</span><span>100% Natural</span></div>
+        <div class="value-pill"><span class="icon">🤝</span><span>Community First</span></div>
+        <div class="value-pill"><span class="icon">✨</span><span>Innovation</span></div>
+        <div class="value-pill"><span class="icon">🏆</span><span>Quality Always</span></div>
+        <div class="value-pill"><span class="icon">💛</span><span>Bringer of Joy</span></div>
+        <div class="value-pill"><span class="icon">🌾</span><span>Farmer Support</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TEAM ===== -->
+  <section class="page-section alt-bg" id="team">
+    <div class="section-inner">
+      <div style="text-align:center; margin-bottom: 52px;">
+        <span class="section-label">The People Behind It</span>
+        <h2 class="section-title">Meet Our <span>Team</span></h2>
+        <div class="section-line" style="margin: 0 auto 0;"></div>
+      </div>
+      <div class="team-grid">
+
+        <div class="team-card fade-in">
+          <div class="team-img-wrap">
+            <img src="staff1.jpg" alt="Juliana Afi Yamenu">
+            <div class="team-img-overlay"></div>
+          </div>
+          <div class="team-card-body">
+            <h3>Juliana Afi Yamenu</h3>
+            <span class="team-role">Founder &amp; CEO</span>
+            <p>The driving force behind Beatee Agro-Processing. With relentless determination and personal sacrifice, Juliana transformed a family tradition into a thriving enterprise.</p>
+          </div>
+        </div>
+
+        <div class="team-card fade-in">
+          <div class="team-img-wrap">
+            <img src="bee.jpg" alt="Beatrice Ayawo Nyamadzorse">
+            <div class="team-img-overlay"></div>
+          </div>
+          <div class="team-card-body">
+            <h3>Beatrice Ayawo Nyamadzorse</h3>
+            <span class="team-role">Quality Control Officer</span>
+            <p>The inspiration behind the brand name "Beatee," Beatrice ensures every batch meets the highest standards of taste, texture, and hygiene before it reaches customers.</p>
+          </div>
+        </div>
+
+        <div class="team-card fade-in">
+          <div class="team-img-wrap">
+            <img src="staff3.jpg" alt="Kojo Tawiah Yovogan">
+            <div class="team-img-overlay"></div>
+          </div>
+          <div class="team-card-body">
+            <h3>Kojo Tawiah Yovogan</h3>
+            <span class="team-role">Marketing Lead</span>
+            <p>Kojo champions the BEA TEE brand in the marketplace — connecting our products with households, retailers, and wholesale partners across Ghana and beyond.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="page-section" id="contact">
+    <div class="section-inner">
+      <span class="section-label">Get in Touch</span>
+      <h2 class="section-title">Contact <span>Information</span></h2>
+      <div class="section-line"></div>
+      <div class="contact-grid">
+
+        <div class="contact-intro fade-in">
+          <p>We'd love to hear from you! Whether you're a customer, retailer, wholesaler, or export partner — our team is always ready to assist. Reach out through any of the channels below.</p>
+          <div class="contact-cards">
+            <div class="contact-card">
+              <div class="contact-icon">📞</div>
+              <div class="contact-info">
+                <strong>Phone Numbers</strong>
+                <span>054-064-5738 &nbsp;|&nbsp; 024-949-9412 &nbsp;|&nbsp; 054-489-3582</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">📧</div>
+              <div class="contact-info">
+                <strong>Email Address</strong>
+                <span>beateeagroprocessing@gmail.com</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">📍</div>
+              <div class="contact-info">
+                <strong>Factory Location</strong>
+                <span>Warakese, Mampong-Ashanti,<br>Ashanti Region, Ghana</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">🕐</div>
+              <div class="contact-info">
+                <strong>Working Hours</strong>
+                <span>Monday – Saturday: 7:00 AM – 6:00 PM<br>Sunday: By appointment only</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-box fade-in">
+          <div class="map-icon">📍</div>
+          <h4>Warakese, Mampong-Ashanti</h4>
+          <p>Ashanti Region, Ghana<br><br>We are located in the heart of Mampong-Ashanti oposite <strong>ECG</strong>, easily accessible from the main road. Visit us for factory tours, bulk orders, or partnership discussions.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA BANNER ===== -->
+  <section class="cta-banner">
+    <h2>Taste the <span>Joy of Ghana</span></h2>
+    <p>Explore our products, learn how we make our Gari, or get in touch to place your order today.</p>
+    <div class="btn-group">
+      <a href="index.html" class="btn btn-primary">Back to Home</a>
+      <a href="Production Process.html" class="btn btn-outline">Our Process</a>
+      <a href="gallery.html" class="btn btn-outline">View Gallery</a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand-sm">
+        <img src="logo2.png" alt="Beatee Logo">
+        <h4>Beatee Agro-Processing</h4>
+        <p>"Bringer of Joy" — Made in Ghana</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="Production Process.html">Process</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Beatee Agro-Processing. All rights reserved.</span>
+      <span>Made with ❤️ in Ghana</span>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
 </html>
